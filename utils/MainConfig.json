@@ -1,0 +1,16 @@
+[
+    {
+        "browserType": "chrome",
+        "device": "desktop",
+        "ecomSiteUrl": "https://ecom.staging.euka.edu.au/",
+        "lmsUrl": "https://learn.staging.euka.edu.au/",
+        "portalUrl": "https://portal.rc.euka.edu.au/",
+        "headless": false,
+        "locale": "AUSTRALIA",
+        "isRunRemotely": false,
+        "gmailUsername": "anjula.w",
+        "gmailDomain": "@euka.edu.au",
+        "pageNavigationTimeOut": 60000,
+        "pageElementVisibleTimeOut": 60000
+    }
+]
