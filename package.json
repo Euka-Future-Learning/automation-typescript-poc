@@ -1,7 +1,6 @@
 {
-  "name": "PlayWrightAutomation",
+  "name": "playwrightautomation",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "testdb": " npx playwright test tests/NewCustomerFullYearCheckOutTest.spec.ts --headed; ",
@@ -17,10 +16,25 @@
     "@cucumber/cucumber": "*",
     "@playwright/test": "^1.40",
     "allure-playwright": "^2.0.0-beta.15",
-    "typescript": "^5.4.5"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@types/node": "^22.13.14",
     "exceljs": "^4.4.0",
-    "gson": "^0.1.5"
-  }
+    "googleapis": "^148.0.0",
+    "gson": "^0.1.5",
+    "ts-node": "^10.9.2"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Euka-Future-Learning/automation-typescript-poc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Euka-Future-Learning/automation-typescript-poc/issues"
+  },
+  "homepage": "https://github.com/Euka-Future-Learning/automation-typescript-poc#readme",
+  "description": ""
 }
