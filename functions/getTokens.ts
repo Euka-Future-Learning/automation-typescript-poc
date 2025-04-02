@@ -1,3 +1,4 @@
+/*
 import { google } from 'googleapis';
 import readline from 'readline';
 
@@ -32,4 +33,4 @@ rl.question('Enter the code from the redirect URL: ', async (code) => {
 
     // Use tokens in your Gmail API calls
     oauth2Client.setCredentials(tokens);
-});
+});*/
