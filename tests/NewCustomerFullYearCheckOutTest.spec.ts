@@ -81,7 +81,6 @@ test(`newUserCheckoutFlowTest`, async ({}) => {
         const premiumServiceSelectionPage = poManager.getSelectPremiumServicePage();
         await premiumServiceSelectionPage.clickNextButton();
     });
-
     await test.step("Fill payment details and navigate to review page", async () => {
         const paymentPage = poManager.getPaymentPage();
         await paymentPage.enterCCNumber("4111 1111 1111 1111")
