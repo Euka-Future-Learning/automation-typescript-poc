@@ -1,4 +1,4 @@
-import {test, expect, BrowserContext, chromium} from '@playwright/test';
+import {test, expect, BrowserContext, chromium, Page} from '@playwright/test';
 import {customTest} from '../utils_ts/test-base';
 
 import {POManager} from '../pageobjects_ts/POManager';
@@ -12,19 +12,39 @@ const data = JSON.parse(JSON.stringify(require("../utils/newCustomerFullYearChec
 let webContext: BrowserContext;
 let poManager: POManager;
 let parentEmail: string;
+let page : Page;
 
 test.beforeAll(async ({browser}) => {
     webContext = await browser.newContext({
-        storageState: './utils/sessionInfo.json'
+        storageState: './utils/sessionInfo.json',
+        recordVideo: { dir: 'videos/' }
     });
 })
+
+test.afterAll(async ({}, testInfo) => {
+    // Attach video after test execution
+    const videoPath = await page.video()?.path();
+    if (videoPath) {
+        await testInfo.attach('Test Video', {
+            path: videoPath,
+            contentType: 'video/webm',
+        });
+    }
+});
+
+
 test(`newUserCheckoutFlowTest`, async ({}) => {
-    const page = await webContext.newPage();
+    page = await webContext.newPage();
 
     await test.step("Run Tests in Full screen Mode", async () => {
         const viewportSize = await page.evaluate(() => ({width: window.innerWidth, height: window.innerHeight}));
         await page.setViewportSize(viewportSize);
         poManager = new POManager(page);
+        // Attach a custom message to the report
+        await test.info().attach('Welcome To Main Screen Header', {
+            body: 'Welcome To Main Screen',
+            contentType: 'text/plain',
+        });
     })
 
     await test.step("Fill Parent details and Navigate to country and state selection page", async () => {
@@ -61,7 +81,6 @@ test(`newUserCheckoutFlowTest`, async ({}) => {
         const premiumServiceSelectionPage = poManager.getSelectPremiumServicePage();
         await premiumServiceSelectionPage.clickNextButton();
     });
-
     await test.step("Fill payment details and navigate to review page", async () => {
         const paymentPage = poManager.getPaymentPage();
         await paymentPage.enterCCNumber("4111 1111 1111 1111")
@@ -85,18 +104,18 @@ test(`newUserCheckoutFlowTest`, async ({}) => {
         const parentEmailVisible = await paymentSuccessPage.isParentEmailVisible(parentEmail, page);
         console.log("Is Parent Email Visible in payemt success Page: ", parentEmailVisible);
         await expect(parentEmailVisible).toBeTruthy();
-    })
+        })
 
-    await test.step("Fetch the enrolment link and navigate to enrolment page", async () => {
-        const URL = await ExtractEmails.extractEnrolmentUrl(parentEmail)
+        await test.step("Fetch the enrolment link and navigate to enrolment page", async () => {
+            const URL = await ExtractEmails.extractEnrolmentUrl(parentEmail)
 
-        //console.log("MailBODY ::: >>> "+mailBody);
-        console.log("URL ::: >>> "+URL);
-        const enrolmentHomePage = poManager.getEnrolmentHomePage();
-        await enrolmentHomePage.goTo(URL)
+            //console.log("MailBODY ::: >>> "+mailBody);
+            console.log("URL ::: >>> "+URL);
+            const enrolmentHomePage = poManager.getEnrolmentHomePage();
+            await enrolmentHomePage.goTo(URL)
 
 
-    })
+        })
 
 
 });

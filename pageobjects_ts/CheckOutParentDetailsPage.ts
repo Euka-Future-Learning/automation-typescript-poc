@@ -26,18 +26,18 @@ constructor(page:Page)
 
 async goTo()
 {
-    await this.page.goto("https://portal.rc.euka.edu.au/checkout?selectedCountry=AU");
-    await this.page.waitForLoadState('networkidle');
+    await this.page.goto("https://portal.euka.edu.au/checkout?selectedCountry=AU");
+    //await this.page.waitForLoadState('networkidle');
 }
 
 async fillParentFirstName(firstName:string)
 {
-    await this.parentFirstNameInput.fill(firstName);
+    await this.parentFirstNameInput.type(firstName);
 }
 
 async fillParentEmail(email:string)
 {
-    await this.parentEmailInput.fill(email);
+    await this.parentEmailInput.type(email);
 }
 
 async selectNewsletterSubscription()
